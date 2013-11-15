@@ -1,6 +1,6 @@
 import os
 from os.path import join, dirname, abspath, isabs, exists
-import cPickle as pickle
+from six.moves import cPickle as pickle
 import warnings
 
 from scrapy.utils.conf import closest_scrapy_cfg, get_config, init_env

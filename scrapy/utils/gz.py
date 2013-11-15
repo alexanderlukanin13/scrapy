@@ -1,5 +1,5 @@
 import struct
-from cStringIO import StringIO
+from io import BytesIO
 from gzip import GzipFile
 
 def gunzip(data):
@@ -7,7 +7,7 @@ def gunzip(data):
 
     This is resilient to CRC checksum errors.
     """
-    f = GzipFile(fileobj=StringIO(data))
+    f = GzipFile(fileobj=BytesIO(data))
     output = ''
     chunk = '.'
     while chunk:

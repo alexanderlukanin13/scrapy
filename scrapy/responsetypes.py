@@ -3,10 +3,9 @@ This module implements a class which returns the appropiate Response class
 based on different criterias.
 
 """
-
 from mimetypes import MimeTypes
 from pkgutil import get_data
-from cStringIO import StringIO
+from io import StringIO
 
 from scrapy.http import Response
 from scrapy.utils.misc import load_object
@@ -33,7 +32,7 @@ class ResponseTypes(object):
         self.classes = {}
         self.mimetypes = MimeTypes()
         mimedata = get_data('scrapy', 'mime.types')
-        self.mimetypes.readfp(StringIO(mimedata))
+        self.mimetypes.readfp(StringIO(mimedata.decode('utf8')))
         for mimetype, cls in self.CLASSES.iteritems():
             self.classes[mimetype] = load_object(cls)
 

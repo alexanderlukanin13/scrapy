@@ -4,6 +4,7 @@ twisted
 boto
 Pillow
 django
+six>=1.4.1
 
 # testing requirements
 mock

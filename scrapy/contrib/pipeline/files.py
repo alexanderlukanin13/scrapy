@@ -7,9 +7,9 @@ import os
 import os.path
 import rfc822
 import time
-import urlparse
+from six.moves.urllib.parse import urlparse
 from collections import defaultdict
-from cStringIO import StringIO
+from io import BytesIO
 
 from twisted.internet import defer, threads
 
@@ -166,7 +166,7 @@ class FilesPipeline(MediaPipeline):
         if os.path.isabs(uri):  # to support win32 paths like: C:\\some\dir
             scheme = 'file'
         else:
-            scheme = urlparse.urlparse(uri).scheme
+            scheme = urlparse(uri).scheme
         store_cls = self.STORE_SCHEMES[scheme]
         return store_cls(uri)
 
@@ -261,7 +261,7 @@ class FilesPipeline(MediaPipeline):
 
     def file_downloaded(self, response, request, info):
         key = self.file_key(request.url)
-        buf = StringIO(response.body)
+        buf = BytesIO(response.body)
         self.store.persist_file(key, buf, info)
         checksum = md5sum(buf)
         return checksum

@@ -5,7 +5,7 @@ This module implements the FormRequest class which is a more covenient class
 See documentation in docs/topics/request-response.rst
 """
 
-import urllib
+from six.moves.urllib.parse import urlencode
 import lxml.html
 from scrapy.http.request import Request
 from scrapy.utils.python import unicode_to_str
@@ -44,7 +44,7 @@ def _urlencode(seq, enc):
     values = [(unicode_to_str(k, enc), unicode_to_str(v, enc))
               for k, vs in seq
               for v in (vs if hasattr(vs, '__iter__') else [vs])]
-    return urllib.urlencode(values, doseq=1)
+    return urlencode(values, doseq=1)
 
 def _get_form(response, formname, formnumber, formxpath):
     """Find the form element """

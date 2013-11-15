@@ -1,6 +1,6 @@
 import os
 import unittest
-import urlparse
+from six.moves.urllib.parse import urlparse
 
 from scrapy.http import Response, TextResponse, HtmlResponse
 from scrapy.utils.response import body_or_str, response_httprepr, open_in_browser, \
@@ -44,7 +44,7 @@ class ResponseUtilsTest(unittest.TestCase):
         url = "http:///www.example.com/some/page.html"
         body = "<html> <head> <title>test page</title> </head> <body>test body</body> </html>"
         def browser_open(burl):
-            path = urlparse.urlparse(burl).path
+            path = urlparse(burl).path
             if not os.path.exists(path):
                 path = burl.replace('file://', '')
             bbody = open(path).read()

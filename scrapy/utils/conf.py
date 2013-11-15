@@ -1,6 +1,6 @@
 import sys
 import os
-from ConfigParser import SafeConfigParser
+from six.moves import configparser
 from operator import itemgetter
 
 def build_component_list(base, custom):
@@ -50,7 +50,7 @@ def init_env(project='default', set_syspath=True):
 def get_config(use_closest=True):
     """Get Scrapy config file as a SafeConfigParser"""
     sources = get_sources(use_closest)
-    cfg = SafeConfigParser()
+    cfg = configparser.SafeConfigParser()
     cfg.read(sources)
     return cfg
 

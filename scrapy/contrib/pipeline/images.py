@@ -5,7 +5,7 @@ See documentation in topics/images.rst
 """
 
 import hashlib
-from cStringIO import StringIO
+from io import BytesIO
 
 from PIL import Image
 
@@ -72,7 +72,7 @@ class ImagesPipeline(FilesPipeline):
 
     def get_images(self, response, request, info):
         key = self.file_key(request.url)
-        orig_image = Image.open(StringIO(response.body))
+        orig_image = Image.open(BytesIO(response.body))
 
         width, height = orig_image.size
         if width < self.MIN_WIDTH or height < self.MIN_HEIGHT:
@@ -99,7 +99,7 @@ class ImagesPipeline(FilesPipeline):
             image = image.copy()
             image.thumbnail(size, Image.ANTIALIAS)
 
-        buf = StringIO()
+        buf = BytesIO()
         image.save(buf, 'JPEG')
         return image, buf
 

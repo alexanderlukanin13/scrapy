@@ -1,7 +1,11 @@
 import cgi
+import sys
 import unittest
-import xmlrpclib
-from urlparse import urlparse
+if sys.version_info[0] == 2:
+    import xmlrpclib as xmlrpc_client
+else:
+    import xmlrpc.client as xmlrpc_client
+from six.moves.urllib.parse import urlparse
 
 from scrapy.http import Request, FormRequest, XmlRpcRequest, Headers, HtmlResponse
 
@@ -658,7 +662,7 @@ class XmlRpcRequestTest(RequestTest):
     def _test_request(self, **kwargs):
         r = self.request_class('http://scrapytest.org/rpc2', **kwargs)
         self.assertEqual(r.headers['Content-Type'], 'text/xml')
-        self.assertEqual(r.body, xmlrpclib.dumps(**kwargs))
+        self.assertEqual(r.body, xmlrpc_client.dumps(**kwargs))
         self.assertEqual(r.method, 'POST')
         self.assertEqual(r.encoding, kwargs.get('encoding', 'utf-8'))
         self.assertTrue(r.dont_filter, True)

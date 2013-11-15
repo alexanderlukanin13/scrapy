@@ -3,13 +3,13 @@ Mail sending helpers
 
 See documentation in docs/topics/email.rst
 """
-from cStringIO import StringIO
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMENonMultipart import MIMENonMultipart
-from email.MIMEBase import MIMEBase
-from email.MIMEText import MIMEText
-from email.Utils import COMMASPACE, formatdate
-from email import Encoders
+from io import StringIO
+from email.mime.multipart import MIMEMultipart
+from email.mime.nonmultipart import MIMENonMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+from email.encoders import encode_base64
 
 from twisted.internet import defer, reactor, ssl
 from twisted.mail.smtp import ESMTPSenderFactory
@@ -54,7 +54,7 @@ class MailSender(object):
             for attach_name, mimetype, f in attachs:
                 part = MIMEBase(*mimetype.split('/'))
                 part.set_payload(f.read())
-                Encoders.encode_base64(part)
+                encode_base64(part)
                 part.add_header('Content-Disposition', 'attachment; filename="%s"' \
                     % attach_name)
                 msg.attach(part)

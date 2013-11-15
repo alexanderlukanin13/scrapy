@@ -1,8 +1,8 @@
 """Download handlers for http and https schemes"""
 
 from time import time
-from cStringIO import StringIO
-from urlparse import urldefrag
+from io import BytesIO
+from six.moves.urllib.parse import urldefrag
 
 from zope.interface import implements
 from twisted.internet import defer, reactor, protocol
@@ -136,7 +136,7 @@ class _ResponseReader(protocol.Protocol):
         self._finished = finished
         self._txresponse = txresponse
         self._request = request
-        self._bodybuf = StringIO()
+        self._bodybuf = BytesIO()
 
     def dataReceived(self, bodyBytes):
         self._bodybuf.write(bodyBytes)

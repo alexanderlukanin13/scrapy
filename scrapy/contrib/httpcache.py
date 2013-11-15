@@ -1,6 +1,6 @@
 from __future__ import print_function
 import os
-import cPickle as pickle
+from six.moves import cPickle as pickle
 from time import time
 from weakref import WeakKeyDictionary
 from email.utils import mktime_tz, parsedate_tz
